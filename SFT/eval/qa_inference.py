@@ -1,6 +1,6 @@
 '''
 CUDA_VISIBLE_DEVICES=4,5,6,7 python qa_inference.py \
-    --model-name-or-path path/to/pmc_llama_model \
+    --model-name-or-path path/to/model \
     --data-path /path/to/test.jsonl \
     --answers-dir /path/to/inferenced_result_dir
     --output-dir /path/to/output_results
