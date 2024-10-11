@@ -42,48 +42,26 @@ def parse_pmc_answers(result_dir: str, file_names: Sequence[str]):
         file_path = os.path.join(result_dir, file_name)
         with open(file_path, 'r') as f:
             answer_str = f.read()
-        #matched_pieces = re.findall(r'(?i)OPTION [ABCD] IS CORRECT', answer_str)  # could have more than one pieces of matched str
-        #pattern = r"(?i)OPTION\s+([ABCDE])\s+IS\s+CORRECT"
-        #match = re.search(pattern, text)
-        #pattern = r"(?i)\banswer is\s*[:' ]+\s*([ABCDE])\.?\b"
-        #match = re.search(pattern, answer_str)
 
-        #with VLLM
-        #pattern = r"(?i)\b['\"]?([ABCDE])['\"]?\s*[.)':]\s*['\"]?.*['\"]?\s*$"
         pattern = r"(?i)OPTION\s+([ABCDE])\s+IS\s+CORRECT"
         match = re.search(pattern, answer_str)
-        #if match is not None:
 
-        #pattern = r"(?i)\b['\"]?([ABCDE])['\"]?\s*[.)':]?\s*['\"]?.*['\"]?\s*$|OPTION\s+([ABCDE])\s+IS\s+CORRECT"
-        #match = re.search(pattern, answer_str.strip(), re.IGNORECASE)
-        #match = re.search(pattern, answer_str)
-
-        """
-        if len( matched_pieces ) == 0:  # no matched piece
-            no_answer_num += 1
-            continue
-        predicted_option = matched_pieces[0].split()[1]
-        """
         
         if match is not None:
             predicted_option = match.group(1).upper()
         else:
-            #pattern = r"(?i)\b['\"]?([ABCDE])['\"]?\s*[.)':]\s*['\"]?.*['\"]?\s*$"
-            #pattern = r"(?i)^\s*['\"]?([ABCDE])['\"]?\s*[.)':]\s*['\"]?(.*?)['\"]?\s*$"
             pattern = r"(?i)^\s*['\"]?([ABCDE])['\"]?\s*[.)':]\s*(.*?)\s*$"
-            #pattern = r'^\s*([ABCDE])\.\s*'
             match = re.match(pattern, answer_str, re.DOTALL)
             if not match:
                 no_answer_num += 1
                 continue
             else:
-                predicted_option = match.group(1).upper() #(match.group(1) or match.group(2)).upper() #match.group(1)  # Returns the matching letter if found
+                predicted_option = match.group(1).upper() # Returns the matching letter if found
         
 
         pmc_answers[sample_id] = predicted_option
     # endfor
 
-    # raise RuntimeError( len(pmc_answers) )
     print(f"\033[32mNo Answer Num\033[0m: {no_answer_num}")
     return pmc_answers
 
