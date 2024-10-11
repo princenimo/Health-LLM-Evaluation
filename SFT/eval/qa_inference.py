@@ -1,5 +1,5 @@
 '''
-CUDA_VISIBLE_DEVICES=4,5,6,7 python medqa_inference.py \
+CUDA_VISIBLE_DEVICES=4,5,6,7 python qa_inference.py \
     --model-name-or-path path/to/pmc_llama_model \
     --data-path /path/to/test.jsonl \
     --answers-dir /path/to/inferenced_result_dir
@@ -120,8 +120,6 @@ def smart_tokenizer_and_embedding_resize(
     model: transformers.PreTrainedModel,
 ):
     """Resize tokenizer and embedding.
-
-    Note: This is the unoptimized version that may make your embedding size not be divisible by 64.
     """
     num_new_tokens = tokenizer.add_special_tokens(special_tokens_dict)
     model.resize_token_embeddings(len(tokenizer))
