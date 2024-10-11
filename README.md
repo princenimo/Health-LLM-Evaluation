@@ -32,19 +32,16 @@ To run the evaluation, use the following format:
 
 `./mcq_inference_pipeline.sh -m "BioMistral/BioMistral-7B" -d "/path/to/health_dataset.json" -i "/path/to/results" -p "MCQ" -n 3`
 
-## Process Overview
-1. Running Inference
-The script will run the model on the specified dataset and store the outputs in the specified directory:
+## Pipeline steps
+1. **Running Inference:** The script will run the model on the specified dataset and store the outputs in the specified directory:
 
 `python3 /path/to/qa_inference.py $INFER_ARGS`
 
-2. Extracting Answers
-The script extracts the model's predicted answers and stores them in JSON format for further evaluation:
+2. **Extracting Answers:** The script extracts the model's predicted answers and stores them in JSON format for further evaluation:
 
 `python3 /path/to/eval_medqa.py $EVAL_ARGS`
 
-3. Accuracy Calculation
-Finally, the script calculates the accuracy of the model based on the extracted answers and the benchmark data:
+3. **Accuracy Calculation:** Finally, the script calculates the accuracy of the model based on the extracted answers and the benchmark data:
 
 
 `python3 /path/to/get_accuracy.py $REPORT_ARGS`
@@ -53,7 +50,7 @@ Finally, the script calculates the accuracy of the model based on the extracted 
 The inference results and extracted answers will be saved in the directory specified by the -i parameter.
 A report containing the accuracy metrics will be generated and saved in the same directory.
 
-### Directory Structure:
+### Directory Tree:
 ```
 /path/to/results/
 ├── output/
